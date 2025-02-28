@@ -151,10 +151,10 @@ namespace MassTransit.EntityFrameworkCoreIntegration
 
         async Task DeliverOutboxMessage(OutboxMessage message, CancellationToken cancellationToken)
         {
-            message.Deserialize(SystemTextJsonMessageSerializer.Instance);
-
             try
             {
+                message.Deserialize(SystemTextJsonMessageSerializer.Instance);
+
                 using var sendToken = new CancellationTokenSource(_options.MessageDeliveryTimeout);
                 using var token = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, sendToken.Token);
 
